@@ -19,3 +19,19 @@ The main dependencies are:
 - `matplotlib`
 - `deap`
 
+## Running tests
+
+After installing dependencies, run the test suite with:
+
+```bash
+pytest -q
+```
+
+## Style checks
+
+Use `flake8` to ensure code style compliance:
+
+```bash
+flake8 .
+```
+

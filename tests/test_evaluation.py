@@ -6,7 +6,9 @@ from engine.evaluation import evaluate_strategy
 
 
 def test_evaluate_strategy_returns_float():
-    price = pd.Series(np.cumprod(1 + np.random.normal(0, 0.01, 100)), name="price")
+    price = pd.Series(
+        np.cumprod(1 + np.random.normal(0, 0.01, 100)), name="price"
+    )
     strat = generate_random_strategy()
     result = evaluate_strategy(strat, price)
     assert isinstance(result, float)
