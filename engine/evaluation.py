@@ -1,5 +1,4 @@
 import vectorbt as vbt
-import pandas as pd
 
 
 def evaluate_strategy(strategy, price_data):

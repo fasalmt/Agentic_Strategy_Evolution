@@ -17,7 +17,9 @@ def crossover(parent1: dict, parent2: dict) -> dict:
     }
 
 
-def evolve_strategies(strategies: List[dict], fitness_scores: List[float]) -> List[dict]:
+def evolve_strategies(
+    strategies: List[dict], fitness_scores: List[float]
+) -> List[dict]:
     """Evolve a population of strategies based on fitness scores."""
     paired = list(zip(strategies, fitness_scores))
     paired.sort(key=lambda x: x[1], reverse=True)
