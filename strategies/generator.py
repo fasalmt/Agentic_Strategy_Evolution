@@ -5,10 +5,18 @@ from .rsi import RSIStrategy
 from .bollinger import BollingerBandStrategy
 
 
-def generate_random_strategy():
-    """Generate a random trading strategy instance."""
+def generate_random_strategy(allowed_types=None):
+    """Generate a random trading strategy instance.
 
-    choice = random.choice(["ma", "rsi", "bb"])
+    Parameters
+    ----------
+    allowed_types : list[str] or None, optional
+        Restrict the strategy types that can be generated. When ``None`` all
+        available strategy types are considered.
+    """
+
+    choices = ["ma", "rsi", "bb"] if allowed_types is None else allowed_types
+    choice = random.choice(choices)
 
     if choice == "ma":
         short_window = random.randint(5, 20)
