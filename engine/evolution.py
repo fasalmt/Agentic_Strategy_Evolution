@@ -36,7 +36,7 @@ def evolve_strategies(
     # mutate survivors
     for i, strat in enumerate(survivors):
         if random.random() < 0.2:
-            survivors[i] = generate_random_strategy()
+            survivors[i] = generate_random_strategy(["ma"])
 
     # produce children
     while len(survivors) < len(strategies):
@@ -58,7 +58,9 @@ def main():
         np.cumprod(1 + np.random.normal(0, 0.01, 300)), name="price"
     )
 
-    strategies = [generate_random_strategy() for _ in range(population_size)]
+    strategies = [
+        generate_random_strategy(["ma"]) for _ in range(population_size)
+    ]
 
     for gen in range(generations):
         fitness = [evaluate_strategy(s, price_series) for s in strategies]
