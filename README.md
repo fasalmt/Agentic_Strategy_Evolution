@@ -40,8 +40,9 @@ This DataFrame can then be used as `price_data` when evaluating strategies.
 
 ## Evolving strategies
 
-Run the evolution driver to create and evolve a population of moving average
-strategies:
+Run the evolution driver to create and evolve a population of trading
+strategies. Available strategy types include moving average crossovers, RSI
+thresholds and Bollinger Band breakouts:
 
 ```bash
 python engine/evolution.py
