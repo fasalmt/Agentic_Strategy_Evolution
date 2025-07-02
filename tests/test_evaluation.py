@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from strategies.generator import generate_random_strategy
+from strategies import generate_random_strategy
 from engine.evaluation import evaluate_strategy
 
 

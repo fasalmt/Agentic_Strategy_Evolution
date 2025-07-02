@@ -2,24 +2,30 @@ import random
 from typing import List
 
 from strategies.generator import generate_random_strategy
+from strategies.moving_average import MovingAverageCrossoverStrategy
 from .evaluation import evaluate_strategy
 
 
-def crossover(parent1: dict, parent2: dict) -> dict:
+def crossover(
+    parent1: MovingAverageCrossoverStrategy,
+    parent2: MovingAverageCrossoverStrategy,
+) -> MovingAverageCrossoverStrategy:
     """Create a child strategy from two parents."""
-    return {
-        "short_window": random.choice(
-            [parent1["short_window"], parent2["short_window"]]
+    return MovingAverageCrossoverStrategy(
+        short_window=random.choice(
+            [parent1.short_window, parent2.short_window]
         ),
-        "long_window": random.choice(
-            [parent1["long_window"], parent2["long_window"]]
-        ),
-    }
+        long_window=random.choice([
+            parent1.long_window,
+            parent2.long_window,
+        ]),
+    )
 
 
 def evolve_strategies(
-    strategies: List[dict], fitness_scores: List[float]
-) -> List[dict]:
+    strategies: List[MovingAverageCrossoverStrategy],
+    fitness_scores: List[float],
+) -> List[MovingAverageCrossoverStrategy]:
     """Evolve a population of strategies based on fitness scores."""
     paired = list(zip(strategies, fitness_scores))
     paired.sort(key=lambda x: x[1], reverse=True)

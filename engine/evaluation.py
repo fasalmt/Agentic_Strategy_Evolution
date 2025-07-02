@@ -2,12 +2,13 @@ import vectorbt as vbt
 
 
 def evaluate_strategy(strategy, price_data):
-    """Run a backtest of a simple moving average crossover strategy.
+    """Run a backtest for a provided strategy object or callable.
 
     Parameters
     ----------
-    strategy : dict
-        Strategy configuration with ``short_window`` and ``long_window`` keys.
+    strategy : Strategy or Callable
+        Object implementing ``generate_signals`` or a callable returning
+        ``(entries, exits)`` when passed ``price_data``.
     price_data : pandas.Series
         Series of price data.
 
@@ -16,14 +17,15 @@ def evaluate_strategy(strategy, price_data):
     float
         Total return of the strategy.
     """
-    short_w = strategy["short_window"]
-    long_w = strategy["long_window"]
 
-    fast_ma = vbt.MA.run(price_data, short_w)
-    slow_ma = vbt.MA.run(price_data, long_w)
-
-    entries = fast_ma.ma_crossed_above(slow_ma)
-    exits = fast_ma.ma_crossed_below(slow_ma)
+    if hasattr(strategy, "generate_signals"):
+        entries, exits = strategy.generate_signals(price_data)
+    elif callable(strategy):
+        entries, exits = strategy(price_data)
+    else:
+        raise TypeError(
+            "strategy must be callable or implement generate_signals"
+        )
 
     portfolio = vbt.Portfolio.from_signals(
         price_data,
